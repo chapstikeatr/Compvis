@@ -1,0 +1,2 @@
+# Vision-Based Rock Climbing Route Planning System
+A computer vision system that recommends rock climbing routes by detecting holds and planning optimal paths using vision-language models and search algorithms.
