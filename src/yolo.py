@@ -61,7 +61,7 @@ def main():
     #     device=0
     # )
     run_webcam_detection(
-        model_path="./best.pt",  # Change this to where best.pt is located
+        model_path="./best.pt",  # Change this to where <Your Model>.pt is located
         resize=(640, 480),
         person_only=True
     )
