@@ -12,3 +12,7 @@ datasets/
 *.zip
 *.tar
 *.gz
+*.pt
+*.mp4
+*.MP4
+

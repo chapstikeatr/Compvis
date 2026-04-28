@@ -2,6 +2,7 @@ import cv2
 from ultralytics import YOLO
 # import torch
 
+
 def run_webcam_detection(
     model_path,
     camera_index=0,
@@ -10,7 +11,9 @@ def run_webcam_detection(
 ):
     model = YOLO(model_path)
 
-    cap = cv2.VideoCapture(camera_index)
+    cap = cv2.VideoCapture(0)
+    fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+    out = cv2.VideoWriter('output_human.mp4', fourcc, 20.0, (640, 480))
     if not cap.isOpened():
         raise ValueError("Could not open webcam")
 
@@ -28,15 +31,17 @@ def run_webcam_detection(
         else:
             results = model(frame)
 
-        annotated = results[0].plot()
-
+        annotated = results[0].plot(conf=False, labels=False)
         cv2.imshow("YOLO Webcam Detection", annotated)
+        out.write(annotated)  # Save frame
 
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
     cap.release()
+    out.release()
     cv2.destroyAllWindows()
+
 
 def main():
     # print("Torch version:", torch.__version__)
@@ -56,7 +61,7 @@ def main():
     #     device=0
     # )
     run_webcam_detection(
-        model_path="../runs/detect/yolo_human_detection6/weights/best.pt", #  Change this to where best.pt is located
+        model_path="./best.pt",  # Change this to where best.pt is located
         resize=(640, 480),
         person_only=True
     )
